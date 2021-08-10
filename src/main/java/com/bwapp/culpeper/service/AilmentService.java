@@ -17,6 +17,10 @@ public class AilmentService {
         this.repository = repository;
     }
 
+    public Ailment findById(Long id) {
+        return repository.getById(id);
+    }
+
     public List<Ailment> findByAilmentNameContains(String term) {
         return repository.findByAilmentNameContains(term);
     }
@@ -25,14 +29,12 @@ public class AilmentService {
         return repository.findByBodyPartContains(term);
     }
 
-    public List<Ailment> findByTerms(String[] terms) {
+    public List<Ailment> findByTerm(String term) {
         List<Ailment> ailments = new ArrayList<>();
 
-        for (String term : terms) {
-            if(!term.isBlank()) {
-                ailments.addAll(findByAilmentNameContains(term));
-                ailments.addAll(findByBodyPartContains(term));
-            }
+        if(!term.isBlank()) {
+            ailments.addAll(findByAilmentNameContains(term));
+            ailments.addAll(findByBodyPartContains(term));
         }
 
         List<Long> ids = new ArrayList<>();
