@@ -1,10 +1,7 @@
 package com.bwapp.culpeper.model;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import java.util.Comparator;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "use_")
@@ -14,38 +11,24 @@ public class Use_ extends GenericEntity {
     @JoinColumn(name = "plant_id")
     private Plant plant;
 
-    @ManyToOne
-    @JoinColumn(name = "part_id")
-    private Part part;
-
-    @ManyToOne
-    @JoinColumn(name = "ailment_id")
-    private Ailment ailment;
-
+    private String part;
     private String direction;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "use_ailment",
+            joinColumns = @JoinColumn(name = "use_id"),
+            inverseJoinColumns = @JoinColumn(name = "ailment_id"))
+    private List<Ailment> ailments;
 
     public Use_() {
     }
 
-    public Use_(Plant plant, Ailment ailment, String direction) {
-        this.plant = plant;
-        this.ailment = ailment;
-        this.direction = direction;
-    }
-
-    public Use_(Plant plant, Part part, Ailment ailment, String direction) {
+    public Use_(Plant plant, String part, String direction, List<Ailment> ailments) {
         this.plant = plant;
         this.part = part;
-        this.ailment = ailment;
         this.direction = direction;
-    }
-
-    public Ailment getAilment() {
-        return ailment;
-    }
-
-    public void setAilment(Ailment ailment) {
-        this.ailment = ailment;
+        this.ailments = ailments;
     }
 
     public Plant getPlant() {
@@ -56,11 +39,11 @@ public class Use_ extends GenericEntity {
         this.plant = plant;
     }
 
-    public Part getPart() {
+    public String getPart() {
         return part;
     }
 
-    public void setPart(Part part) {
+    public void setPart(String part) {
         this.part = part;
     }
 
@@ -70,5 +53,13 @@ public class Use_ extends GenericEntity {
 
     public void setDirection(String direction) {
         this.direction = direction;
+    }
+
+    public List<Ailment> getAilments() {
+        return ailments;
+    }
+
+    public void setAilments(List<Ailment> ailments) {
+        this.ailments = ailments;
     }
 }

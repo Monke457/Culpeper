@@ -17,15 +17,11 @@ public class UseService {
         this.repository = repository;
     }
 
-    public List<Use_> findByAilmentName(String term) {
-        return repository.findByAilmentNameContains(term);
+    public List<Use_> findByAilmentContains(String term) {
+        return repository.findByAilmentContains(term);
     }
 
-    public List<Use_> findByAilmentBodyPart(String term) {
-        return repository.findByBodyPartContains(term);
-    }
-
-    public List<Use_> findByPlantContains(String term) {
+    public List<Use_> findByPlant(String term) {
         return repository.findByPlantContains(term);
     }
 
@@ -33,15 +29,12 @@ public class UseService {
         return repository.findByPlantId(id);
     }
 
-    public List<Use_> findByAilmentTerm(String term) {
-        List<Use_> uses = new ArrayList<>();
+    public List<Use_> findByAilmentId(Long id) {
+        return repository.findByAilmentId(id);
+    }
 
-        if(!term.isBlank()) {
-            uses.addAll(findByAilmentName(term));
-            uses.addAll(findByAilmentBodyPart(term));
-            uses.addAll(findByPlantContains(term));
-        }
-
+    public List<Use_> findByPlantTerm(String term) {
+        List<Use_> uses = new ArrayList<>(findByPlant(term));
         List<Long> ids = new ArrayList<>();
 
         //work around for loop not reaching last iteration because list is decreasing...
@@ -53,7 +46,6 @@ public class UseService {
                 ids.add(u.getPlant().getId());
             }
         }
-
         return uses;
     }
 }

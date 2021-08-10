@@ -10,21 +10,23 @@ import java.util.List;
 public interface UseRepository  extends JpaRepository<Use_, Long> {
 
     @Query("FROM Use_ u " +
-            "LEFT OUTER JOIN Ailment a ON u.ailment = a.id " +
-            "WHERE a.ailmentName LIKE CONCAT('%', :term, '%')")
-    List<Use_> findByAilmentNameContains(@Param("term") String term);
-
-    @Query("FROM Use_ u " +
-            "LEFT OUTER JOIN Ailment a ON u.ailment = a.id " +
-            "WHERE a.bodyPart LIKE CONCAT('%', :term, '%')")
-    List<Use_> findByBodyPartContains(@Param("term") String term);
+            "JOIN u.ailments a " +
+            "WHERE a.ailmentName LIKE CONCAT('%', :term, '%') " +
+            "OR a.bodyPart LIKE CONCAT('%', :term, '%')")
+    List<Use_> findByAilmentContains(@Param("term") String term);
 
     @Query("FROM Use_ u " +
             "LEFT OUTER JOIN Plant p ON u.plant = p.id " +
-            "WHERE p.latinName LIKE CONCAT('%', :term, '%')" +
-            "OR p.commonName LIKE CONCAT('%', :term, '%')" +
-            "OR p.description LIKE CONCAT('%', :term, '%')")
+            "WHERE p.latinName LIKE CONCAT('%', :term, '%') " +
+            "OR p.commonName LIKE CONCAT('%', :term, '%') " +
+            "OR p.description LIKE CONCAT('%', :term, '%') " +
+            "OR p.otherNames LIKE CONCAT('%', :term, '%')")
     List<Use_> findByPlantContains(@Param("term") String term);
 
-    List<Use_> findByPlantId(@Param("id") Long id);
+    List<Use_> findByPlantId(Long id);
+
+    @Query("FROM Use_ u " +
+            "JOIN u.ailments a " +
+            "WHERE a.id = :id ")
+    List<Use_> findByAilmentId(@Param("id") Long id);
 }
