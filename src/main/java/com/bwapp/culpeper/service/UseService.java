@@ -11,10 +11,18 @@ import java.util.List;
 public class UseService {
 
     @Autowired
-    private UseRepository repository;
+    private final UseRepository repository;
 
     public UseService(UseRepository repository) {
         this.repository = repository;
+    }
+
+    public List<Use_> findAll() {
+        return repository.findAll();
+    }
+
+    public Use_ findById(Long id) {
+        return repository.findById(id).isPresent() ? repository.findById(id).get() : null;
     }
 
     public List<Use_> findByAilmentContains(String term) {
