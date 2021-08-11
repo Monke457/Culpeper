@@ -28,21 +28,27 @@ public class HomeView extends Div {
 
     private final SplitLayout innerLayout;
 
-    private final Grid<Use_> plantGrid = new Grid<>(Use_.class, false);
-    private final Grid<Ailment> ailmentGrid = new Grid<>(Ailment.class, false);
+    private final Grid<Use_> plantGrid;
+    private final Grid<Ailment> ailmentGrid;
 
     private TextField searchPlants;
     private TextField searchAilments;
     private final Div display= new Div();
 
-    public HomeView(@Autowired UseService useService, @Autowired AilmentService ailmentService) {
+    public HomeView(@Autowired UseService useService, AilmentService ailmentService) {
         this.useService = useService;
         this.ailmentService = ailmentService;
 
+        setSizeFull();
+
+        //configure main layout - search bars and details view
         SplitLayout layout = new SplitLayout();
         layout.setOrientation(SplitLayout.Orientation.VERTICAL);
         layout.addToPrimary(createSearch());
+        layout.setSizeFull();
+        layout.setSplitterPosition(30);
 
+        //configure details view split layout
         innerLayout = new SplitLayout();
         innerLayout.getStyle().set("margin", "auto");
         innerLayout.setSizeFull();
@@ -50,20 +56,25 @@ public class HomeView extends Div {
         innerLayout.setSecondaryStyle("width", "0");
 
         //plant grid settings
+        plantGrid = new Grid<>(Use_.class, false);
         plantGrid.addThemeVariants(GridVariant.LUMO_WRAP_CELL_CONTENT);   //text wrap within cell
-        plantGrid.addColumn(use -> use.getPlant().getLatinName()).setHeader("Latin Name").setResizable(true).setAutoWidth(true);
-        plantGrid.addColumn(use -> use.getPlant().getCommonName()).setHeader("Common Name").setResizable(true).setAutoWidth(true);
-        plantGrid.addColumn(use -> use.getPlant().getGovernment()).setHeader("Government").setResizable(true).setAutoWidth(true);
-        plantGrid.addColumn(use -> use.getPlant().getVirtue()).setHeader("Virtue").setResizable(true).setAutoWidth(true);
+        plantGrid.addColumn(use -> use.getPlant().getLatinName()).setHeader("Latin Name").setResizable(true);
+        plantGrid.addColumn(use -> use.getPlant().getCommonName()).setHeader("Common Name").setResizable(true);
+        plantGrid.addColumn(use -> use.getPlant().getGovernment()).setHeader("Government").setResizable(true);
+        plantGrid.addColumn(use -> use.getPlant().getVirtue()).setHeader("Virtue").setResizable(true);
+        plantGrid.setHeightFull();
+
 
         //ailment grid settings
+        ailmentGrid = new Grid<>(Ailment.class, false);
         ailmentGrid.addThemeVariants(GridVariant.LUMO_WRAP_CELL_CONTENT);      //text wrap
-        ailmentGrid.addColumn(Ailment::getAilmentName).setHeader("Ailment").setResizable(true).setAutoWidth(true);
-        ailmentGrid.addColumn(Ailment::getBodyPart).setHeader("Body Part").setResizable(true).setAutoWidth(true);
-        ailmentGrid.addColumn(Ailment::getVirtue).setHeader("Virtue").setResizable(true).setAutoWidth(true);
+        ailmentGrid.addColumn(Ailment::getAilmentName).setHeader("Ailment").setResizable(true);
+        ailmentGrid.addColumn(Ailment::getBodyPart).setHeader("Body Part").setResizable(true);
+        ailmentGrid.addColumn(Ailment::getVirtue).setHeader("Virtue").setResizable(true);
+        ailmentGrid.setHeightFull();
 
         //style for usage display
-        display.getStyle().set("text-align", "center").set("padding", "20px 10px");
+        display.getStyle().set("padding", "10px");
         innerLayout.addToSecondary(display);
 
         //listener on grid items for details display
@@ -87,30 +98,31 @@ public class HomeView extends Div {
         });
 
         layout.addToSecondary(innerLayout);
-
         add(layout);
     }
 
     private Div createSearch() {
         Div main = new Div();
+        main.setWidthFull();
         main.getStyle().set("margin", "auto").set("text-align", "center");
 
         HorizontalLayout searchLayout = new HorizontalLayout();
-        searchLayout.setAlignItems(FlexComponent.Alignment.CENTER);
+        searchLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
 
         searchPlants = new TextField("Search for plant");
-        searchPlants.getStyle().set("margin-right", "30px");
-        searchPlants.setWidth("400px");
+        searchPlants.setWidth("300px");
+
+        Span orLabel = new Span("or");
+        orLabel.getStyle().set("margin", "0 30px");
 
         searchAilments = new TextField("Search for ailment");
-        searchAilments.getStyle().set("margin-right", "30px");
-        searchAilments.setWidth("400px");
+        searchAilments.setWidth("300px");
 
         Button searchButton = new Button("Search");
         searchButton.addClickListener(e -> createResults());
         searchButton.getStyle().set("margin-top", "30px");
 
-        searchLayout.add(searchPlants, new Span("or"), searchAilments);
+        searchLayout.add(searchPlants, orLabel, searchAilments);
 
         main.add(new H2("Culpeper's Complete Herbal"), searchLayout, searchButton);
 
@@ -120,6 +132,8 @@ public class HomeView extends Div {
     private void createResults() {
         String termP = searchPlants.getValue();
         String termA = searchAilments.getValue();
+
+        clearDetailsView();
 
         if(!termP.isBlank()) {
             innerLayout.addToPrimary(plantGrid);
@@ -136,26 +150,30 @@ public class HomeView extends Div {
     private void createDetailsViewByPlant(Long plantId) {
         display.removeAll();
 
+        HorizontalLayout detailsLayout = new HorizontalLayout();
+        Div imageDiv = new Div();
+        Div textDiv = new Div();
+        textDiv.getStyle().set("width", "100%");
+
         List<Use_> uses = useService.findByPlantId(plantId);
         Plant plant = uses.get(0).getPlant();
 
-        //display plant image
+        //display plant image and details
         if(plant.getImgPath() != null) {
-            Image plantImage = new Image(plant.getImgPath(), plant.getLatinName() + " image");
-            plantImage.setMaxWidth("400px");
-            plantImage.setMaxHeight("400px");
-            display.add(plantImage);
+            Image plantImage = new Image("images/" + plant.getImgPath() + ".jpg", plant.getLatinName() + " image");
+            plantImage.getStyle().set("width", "100%");
+            imageDiv.add(plantImage);
         }
 
         Paragraph description = new Paragraph("Description");
         description.getStyle().set("font-weight", "bold");
+        textDiv.add(description, new Span(plant.getDescription()));
 
         Paragraph aka = new Paragraph("Also called");
         aka.getStyle().set("font-weight", "bold");
 
-        display.add(description, new Span(plant.getDescription()));
-        display.add(aka, new Span(plant.getOtherNames()));
-        display.add(new Hr());
+        detailsLayout.add(imageDiv, textDiv);
+        display.add(detailsLayout, aka, new Span(plant.getOtherNames()), new Hr());
 
         //display usage details per ailment
         for(Use_ u : uses) {        //iterate through all uses
@@ -181,17 +199,21 @@ public class HomeView extends Div {
         display.removeAll();
         display.getStyle().set("text-align", "left").set("vertical-align", "top");
 
-        HorizontalLayout detailsLayout = new HorizontalLayout();
-        Div imageDiv = new Div();
-        Div textDiv = new Div();
+        HorizontalLayout detailsLayout;
+        Div imageDiv;
+        Div textDiv;
         List<Use_> uses = useService.findByAilmentId(ailmentId);
 
         for(Use_ u : uses) {
             Plant p = u.getPlant();
 
-            Image plantImage = new Image(p.getImgPath(), p.getLatinName() + " image");
-            plantImage.setMaxWidth("250px");
-            plantImage.setMaxHeight("250px");
+            detailsLayout = new HorizontalLayout();
+            imageDiv = new Div();
+            textDiv = new Div();
+            textDiv.getStyle().set("width", "100%");
+
+            Image plantImage = new Image("images/" + p.getImgPath() + ".jpg", p.getLatinName() + " image");
+            plantImage.getStyle().set("width", "100%");
 
             Paragraph part = new Paragraph("Part to use: ");
             part.getStyle().set("font-weight", "bold");

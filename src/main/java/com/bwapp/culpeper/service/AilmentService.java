@@ -11,14 +11,18 @@ import java.util.List;
 public class AilmentService {
 
     @Autowired
-    private AilmentRepository repository;
+    private final AilmentRepository repository;
 
     public AilmentService(AilmentRepository repository) {
         this.repository = repository;
     }
 
+    public List<Ailment> findAll() {
+        return repository.findAll();
+    }
+
     public Ailment findById(Long id) {
-        return repository.getById(id);
+        return repository.findById(id).isPresent() ? repository.findById(id).get() : null;
     }
 
     public List<Ailment> findByAilmentNameContains(String term) {
