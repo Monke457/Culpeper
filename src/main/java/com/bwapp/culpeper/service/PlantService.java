@@ -10,19 +10,17 @@ import java.util.List;
 public class PlantService {
 
     @Autowired
-    private PlantRepository repository;
+    private final PlantRepository repository;
 
     public PlantService(PlantRepository repository) {
         this.repository = repository;
     }
 
-    public Plant findByLatinName(String name) {
-        return repository.findByLatinName(name);
+    public List<Plant> findAll() {
+        return repository.findAll();
     }
-    public Plant findByCommonName(String name) {
-        return repository.findByCommonName(name);
-    }
-    public List<Plant> findByDescription(String term) {
-        return repository.findByDescription(term);
+
+    public Plant findById(Long id) {
+        return repository.findById(id).isPresent() ? repository.findById(id).get() : null;
     }
 }
