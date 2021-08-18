@@ -5,7 +5,8 @@ import com.vaadin.flow.component.ComponentUtil;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
-import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Anchor;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -17,9 +18,11 @@ import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @PWA(name = "Culpeper", shortName = "Culpeper", enableInstallPrompt = false)
 @PageTitle("Main")
@@ -44,7 +47,7 @@ public class MainView extends AppLayout {
     }
 
     private final Tabs menu;
-    private H1 viewTitle;
+    private H2 title;
 
     public MainView() {
         setPrimarySection(Section.DRAWER);
@@ -59,9 +62,17 @@ public class MainView extends AppLayout {
         layout.setWidthFull();
         layout.setSpacing(false);
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
+        layout.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
         layout.add(new DrawerToggle());
-        viewTitle = new H1();
-        layout.add(viewTitle);
+        title = new H2();
+        layout.add(title);
+        Anchor log = new Anchor("login", "Sign In");
+        log.getStyle().set("padding-right", "20px");
+        if(SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser") {
+            log.setHref("logout");
+            log.setText("Sign Out");
+        }
+        layout.add(log);
 
         return layout;
     }
@@ -75,7 +86,7 @@ public class MainView extends AppLayout {
         layout.setAlignItems(FlexComponent.Alignment.STRETCH);
         VerticalLayout logoLayout = new VerticalLayout();
         logoLayout.setAlignItems(FlexComponent.Alignment.CENTER);
-        logoLayout.add(new Image("img/logo.png", "Culpeper Logo"));
+        logoLayout.add(new Image("images/logo.png", "Culpeper_Logo"));
         layout.add(logoLayout, menu);
         return layout;
     }
@@ -93,7 +104,8 @@ public class MainView extends AppLayout {
 
     private List<Tab> createMenuItems() {
         MenuItemInfo[] menuItems = new MenuItemInfo[]{
-                new MenuItemInfo("Home", HomeView.class)
+                new MenuItemInfo("Home", HomeView.class),
+                new MenuItemInfo("Admin", AdminView.class)
         };
         List<Tab> tabs = new ArrayList<>();
         for (MenuItemInfo menuItemInfo : menuItems) {
@@ -111,5 +123,22 @@ public class MainView extends AppLayout {
         tab.add(link);
         ComponentUtil.setData(tab, Class.class, menuItemInfo.getView());
         return tab;
+    }
+
+    @Override
+    protected void afterNavigation() {
+        super.afterNavigation();
+        getTabForComponent(getContent()).ifPresent(menu::setSelectedTab);
+        title.setText(getCurrentPageTitle());
+    }
+
+    private Optional<Tab> getTabForComponent(Component component) {
+        return menu.getChildren().filter(tab -> ComponentUtil.getData(tab, Class.class).equals(component.getClass()))
+                .findFirst().map(Tab.class::cast);
+    }
+
+    private String getCurrentPageTitle() {
+        PageTitle title = getContent().getClass().getAnnotation(PageTitle.class);
+        return title == null ? "" : title.value();
     }
 }
