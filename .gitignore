@@ -1,0 +1,12 @@
+# Default ignored files
+/target/
+.idea/
+.settings
+.project
+.classpath
+
+*.iml
+node_modules/
+node/
+frontend/generated/
+pnpmfile.js
