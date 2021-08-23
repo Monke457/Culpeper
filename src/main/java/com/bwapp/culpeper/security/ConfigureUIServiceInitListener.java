@@ -8,6 +8,7 @@ import com.vaadin.flow.server.ServiceInitEvent;
 import com.vaadin.flow.server.VaadinServiceInitListener;
 import org.springframework.stereotype.Component;
 
+
 @Component
 public class ConfigureUIServiceInitListener implements VaadinServiceInitListener {
 
