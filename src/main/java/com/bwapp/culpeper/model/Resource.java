@@ -1,23 +1,34 @@
 package com.bwapp.culpeper.model;
 
 import javax.persistence.Entity;
+import java.sql.Blob;
 
 @Entity
 public class Resource extends GenericEntity {
-    private String path;
+    private String fileName;
+    private Blob file;
 
     public Resource() {
     }
 
-    public Resource(String path) {
-        this.path = path;
+    public Resource(String fileName, Blob file) {
+        this.fileName = fileName;
+        this.file = file;
     }
 
-    public String getPath() {
-        return path;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public Blob getFile() {
+        return file;
+    }
+
+    public void setFile(Blob file) {
+        this.file = file;
     }
 }

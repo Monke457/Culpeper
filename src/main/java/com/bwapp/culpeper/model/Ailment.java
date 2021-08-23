@@ -9,7 +9,7 @@ public class Ailment extends GenericEntity {
 
     private String ailmentName;
     private String bodyPart;
-    private String virtue;
+    private String virtueA;
 
     @ManyToMany(mappedBy = "ailments")
     private List<Use_> uses;
@@ -17,10 +17,10 @@ public class Ailment extends GenericEntity {
     public Ailment() {
     }
 
-    public Ailment(String ailmentName, String bodyPart, String virtue, List<Use_> uses) {
+    public Ailment(String ailmentName, String bodyPart, String virtueA, List<Use_> uses) {
         this.ailmentName = ailmentName;
         this.bodyPart = bodyPart;
-        this.virtue = virtue;
+        this.virtueA = virtueA;
         this.uses = uses;
     }
 
@@ -40,12 +40,12 @@ public class Ailment extends GenericEntity {
         this.bodyPart = bodyPart;
     }
 
-    public String getVirtue() {
-        return virtue;
+    public String getVirtueA() {
+        return virtueA;
     }
 
-    public void setVirtue(String virtue) {
-        this.virtue = virtue;
+    public void setVirtueA(String virtue) {
+        this.virtueA = virtue;
     }
 
     public List<Use_> getUses() {

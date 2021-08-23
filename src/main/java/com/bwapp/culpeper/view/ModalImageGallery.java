@@ -1,5 +1,6 @@
 package com.bwapp.culpeper.view;
 
+import com.bwapp.culpeper.helper.BlobConverter;
 import com.bwapp.culpeper.model.Resource;
 import com.bwapp.culpeper.service.ResourceService;
 import com.vaadin.flow.component.button.Button;
@@ -18,11 +19,15 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.upload.Upload;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
+import com.vaadin.flow.server.InputStreamFactory;
+import com.vaadin.flow.server.StreamResource;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import javax.sql.rowset.serial.SerialBlob;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,15 +37,14 @@ public class ModalImageGallery extends Dialog {
 
     private final Div details;
     private final FlexLayout galleryLayout;
+    private final Paragraph text;
+    private final BlobConverter bc = new BlobConverter();
     private String fileName;
-    private File file;
-    private final Image image;
-    private String selectedImage;
-    private Paragraph text;
+    private String selectedSrc;
+    private String selectedAlt;
 
-    public ModalImageGallery(@Autowired ResourceService resourceService, Image img) {
+    public ModalImageGallery(@Autowired ResourceService resourceService, Image image) {
         this.resourceService = resourceService;
-        this.image = img;
 
         setHeight("80vh");
         setWidth("80vw");
@@ -70,13 +74,9 @@ public class ModalImageGallery extends Dialog {
         upload.addSucceededListener(e -> {
             fileName = e.getFileName();
             try {
-                file = new File("Culpeper/src/main/resources/META-INF/resources/images/" + fileName);
-                FileOutputStream fos = new FileOutputStream(file);
                 byte [] contentInBytes = buffer.getInputStream().readAllBytes();
-                fos.write(contentInBytes);
-                fos.flush();
-                fos.close();
-                Resource newImage = new Resource("images/" + fileName);
+                Blob imageAsBlob = bc.bytesToBlob(contentInBytes);
+                Resource newImage = new Resource(fileName, imageAsBlob);
                 resourceService.update(newImage);
             } catch (IOException ignored) {
             } finally {
@@ -87,8 +87,8 @@ public class ModalImageGallery extends Dialog {
         Button selectImageButton = new Button("Select");
         selectImageButton.addClickListener(e -> {
             try {
-                image.setSrc(selectedImage);
-                image.setAlt(selectedImage + " image");
+                image.setSrc(selectedSrc);
+                image.setAlt(selectedAlt);
                 close();
             }catch (IllegalArgumentException exception) {
                 Notification.show("No image selected");
@@ -98,7 +98,7 @@ public class ModalImageGallery extends Dialog {
         Button cancelButton = new Button(("Cancel"));
         cancelButton.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
         cancelButton.addClickListener(e -> {
-            selectedImage = null;
+            selectedSrc = null;
             close();
         });
 
@@ -109,7 +109,7 @@ public class ModalImageGallery extends Dialog {
                 "Delete", this::deleteImage, "Cancel", this::cancelDelete);
         dialogImage.setConfirmButtonTheme("error primary");
         removeButton.addClickListener(e -> {
-            if(selectedImage != null) dialogImage.open();
+            if(selectedSrc == null) dialogImage.open();
         });
 
         rightLayout.add(text, details, upload, new HorizontalLayout(selectImageButton, cancelButton, removeButton));
@@ -125,34 +125,34 @@ public class ModalImageGallery extends Dialog {
         List<Image> images = new ArrayList<>();
 
         for (Resource r : resources) {
-            Image image = new Image(r.getPath(), r.getPath());
-            images.add(image);
-            image.setMaxHeight("200px");
-            image.setMaxWidth("200px");
-            image.getStyle().set("margin", "0 25px 25px 0");
-            image.addClickListener(e -> {
+            Image tmpImg = bc.blobToImage(r.getFile());
+            tmpImg.setAlt(r.getFileName());
+            images.add(tmpImg);
+            tmpImg.setMaxHeight("200px");
+            tmpImg.setMaxWidth("200px");
+            tmpImg.getStyle().set("margin", "0 25px 25px 0");
+            tmpImg.addClickListener(e -> {
                 for(Image i : images) {
                     i.getStyle().set("border", "none");
                     details.setText("");
                 }
-                if(!image.getSrc().equals(selectedImage)) {
-                    image.getStyle().set("border", "3px solid green");
-                    details.setText("Name: " + image.getSrc().substring(image.getSrc().indexOf("/") + 1));
-                    selectedImage =  image.getSrc();
+                if(!tmpImg.getSrc().equals(selectedSrc)) {
+                    tmpImg.getStyle().set("border", "3px solid green");
+                    details.setText("Name: " + tmpImg.getAlt().get());
+                    selectedSrc = tmpImg.getSrc();
+                    selectedAlt = tmpImg.getAlt().get();
                 }else {
-                    selectedImage = null;
+                    selectedSrc = null;
                 }
-                text.setText("Selected image: " + (selectedImage != null ? "" : "none"));
+                text.setText("Selected image: " + (selectedSrc != null ? "" : "none"));
             });
-            galleryLayout.add(image);
+            galleryLayout.add(tmpImg);
         }
     }
 
     private void deleteImage(ConfirmDialog.ConfirmEvent confirmEvent) {
         try{
-            resourceService.delete(resourceService.findByPath(selectedImage));
-            File f = new File("Culpeper/src/main/resources/META-INF/resources/" + selectedImage);
-            if(f.delete()) Notification.show("Image removed successfully");
+            resourceService.delete(resourceService.findByFileName(selectedAlt));
         }catch (Exception e) {
             Notification.show("Error deleting database entry");
         }finally {

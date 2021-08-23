@@ -19,15 +19,12 @@ public class ResourceService {
         return repository.findAll();
     }
 
-    public Resource update(Resource r) {
-        if(!repository.existsByPath(r.getPath())) {
-            return repository.save(r);
-        }
-        else return null;
+    public Resource findByFileName(String filename) {
+        return repository.findByFileName(filename);
     }
 
-    public Resource findByPath(String path) {
-        return repository.findByPath(path);
+    public Resource update(Resource r) {
+        return repository.save(r);
     }
 
     public void delete(Resource r) {

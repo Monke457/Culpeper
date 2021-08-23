@@ -4,7 +4,9 @@ import com.bwapp.culpeper.model.Plant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PlantService {
@@ -22,5 +24,27 @@ public class PlantService {
 
     public Plant findById(Long id) {
         return repository.findById(id).isPresent() ? repository.findById(id).get() : null;
+    }
+
+    public Plant findByName(String name) {
+        return repository.findByCommonName(name);
+    }
+
+    public Set<String> getAllNames() {
+        Set<String> plantNames = new HashSet<>();
+
+        for (Plant plant : repository.findAll()) {
+            plantNames.add(plant.getCommonName());
+        }
+
+        return plantNames;
+    }
+
+    public void delete(Long id) {
+       repository.deleteById(id);
+    }
+
+    public Plant update(Plant plant) {
+        return repository.save(plant);
     }
 }
