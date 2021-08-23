@@ -9,9 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38fe06a5-b208-46fd-92f4-162e58f4363a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="38fe06a5-b208-46fd-92f4-162e58f4363a" name="Changes" comment="test merge with master" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -182,6 +180,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Application" />
+        <item itemvalue="Application.Application" />
       </list>
     </recent_temporary>
   </component>
@@ -236,7 +235,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629698521435</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="test merge with master">
+      <created>1629701291148</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1629701291148</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -466,6 +472,7 @@
     <MESSAGE value="added admin area and login mask" />
     <MESSAGE value="implemented crud for admin area" />
     <MESSAGE value="gitignore update&#10;resource management change to blob" />
-    <option name="LAST_COMMIT_MESSAGE" value="gitignore update&#10;resource management change to blob" />
+    <MESSAGE value="test merge with master" />
+    <option name="LAST_COMMIT_MESSAGE" value="test merge with master" />
   </component>
 </project>
