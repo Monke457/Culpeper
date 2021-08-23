@@ -1,11 +1,14 @@
 package com.bwapp.culpeper.service;
 
 import com.bwapp.culpeper.model.Ailment;
+import com.bwapp.culpeper.model.Plant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AilmentService {
@@ -21,8 +24,26 @@ public class AilmentService {
         return repository.findAll();
     }
 
+    public Set<Ailment> findAllSet() {
+        return new HashSet<>(repository.findAll());
+    }
+
     public Ailment findById(Long id) {
         return repository.findById(id).isPresent() ? repository.findById(id).get() : null;
+    }
+
+    public Set<String> getAllNames() {
+        Set<String> ailmentNames = new HashSet<>();
+
+        for (Ailment ailment : repository.findAll()) {
+            ailmentNames.add(ailment.getAilmentName());
+        }
+
+        return ailmentNames;
+    }
+
+    public Ailment findByName(String name) {
+        return repository.findByAilmentName(name);
     }
 
     public List<Ailment> findByAilmentNameContains(String term) {
@@ -54,5 +75,17 @@ public class AilmentService {
         }
 
         return ailments;
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
+    public Ailment update(Ailment ailment) {
+        return repository.save(ailment);
+    }
+
+    public boolean exists(String name) {
+        return repository.existsByAilmentName(name);
     }
 }

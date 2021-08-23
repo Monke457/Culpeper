@@ -5,10 +5,13 @@ import com.bwapp.culpeper.model.Plant;
 import com.bwapp.culpeper.model.Use_;
 import com.bwapp.culpeper.service.AilmentService;
 import com.bwapp.culpeper.service.UseService;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
@@ -34,6 +37,9 @@ public class HomeView extends Div {
     private TextField searchPlants;
     private TextField searchAilments;
     private final Div display= new Div();
+    private final Dialog imageLightbox = new Dialog();
+
+    private boolean zoomed;
 
     public HomeView(@Autowired UseService useService, AilmentService ailmentService) {
         this.useService = useService;
@@ -70,7 +76,7 @@ public class HomeView extends Div {
         ailmentGrid.addThemeVariants(GridVariant.LUMO_WRAP_CELL_CONTENT);      //text wrap
         ailmentGrid.addColumn(Ailment::getAilmentName).setHeader("Ailment").setResizable(true);
         ailmentGrid.addColumn(Ailment::getBodyPart).setHeader("Body Part").setResizable(true);
-        ailmentGrid.addColumn(Ailment::getVirtue).setHeader("Virtue").setResizable(true);
+        ailmentGrid.addColumn(Ailment::getVirtueA).setHeader("Virtue").setResizable(true);
         ailmentGrid.setHeightFull();
 
         //style for usage display
@@ -111,12 +117,16 @@ public class HomeView extends Div {
 
         searchPlants = new TextField("Search for plant");
         searchPlants.setWidth("300px");
+        searchPlants.addFocusListener(e -> searchAilments.clear());
+        searchPlants.addKeyDownListener(Key.ENTER, e -> createResults());
 
         Span orLabel = new Span("or");
         orLabel.getStyle().set("margin", "0 30px");
 
         searchAilments = new TextField("Search for ailment");
         searchAilments.setWidth("300px");
+        searchAilments.addFocusListener(e -> searchPlants.clear());
+        searchAilments.addKeyPressListener(Key.ENTER, e -> createResults());
 
         Button searchButton = new Button("Search");
         searchButton.addClickListener(e -> createResults());
@@ -158,12 +168,16 @@ public class HomeView extends Div {
         List<Use_> uses = useService.findByPlantId(plantId);
         Plant plant = uses.get(0).getPlant();
 
+        /*
         //display plant image and details
         if(plant.getImgPath() != null) {
-            Image plantImage = new Image("images/" + plant.getImgPath() + ".jpg", plant.getLatinName() + " image");
+            Image plantImage = new Image(plant.getImgPath(), plant.getLatinName() + " image");
             plantImage.getStyle().set("width", "100%");
+            plantImage.addClickListener(event -> createLightBox(plant.getImgPath()));
             imageDiv.add(plantImage);
         }
+
+         */
 
         Paragraph description = new Paragraph("Description");
         description.getStyle().set("font-weight", "bold");
@@ -212,9 +226,11 @@ public class HomeView extends Div {
             textDiv = new Div();
             textDiv.getStyle().set("width", "100%");
 
-            Image plantImage = new Image("images/" + p.getImgPath() + ".jpg", p.getLatinName() + " image");
+            /*
+            Image plantImage = new Image(p.getImgPath(), p.getLatinName() + " image");
+            plantImage.addClickListener(event -> createLightBox(p.getImgPath()));
             plantImage.getStyle().set("width", "100%");
-
+*/
             Paragraph part = new Paragraph("Part to use: ");
             part.getStyle().set("font-weight", "bold");
 
@@ -231,7 +247,7 @@ public class HomeView extends Div {
             plantTitle.add(cn);
             plantTitle.getStyle().set("margin-top", "0");
 
-            imageDiv.add(plantImage);
+            //imageDiv.add(plantImage);
             imageDiv.getStyle().set("margin", "auto");
 
             textDiv.add(plantTitle);
@@ -245,5 +261,23 @@ public class HomeView extends Div {
 
     private void clearDetailsView() {
         display.removeAll();
+    }
+
+    private void createLightBox(String imagePath) {
+        zoomed = false;
+        imageLightbox.removeAll();
+        Image image = new Image(imagePath, imagePath + " image");
+        image.setSizeFull();
+        image.addClickListener(e -> {
+           if(!zoomed) {
+               imageLightbox.setHeight("100%");
+               zoomed = true;
+           }else {
+               imageLightbox.setHeight("50%");
+               zoomed = false;
+           }
+        });
+        imageLightbox.add(image);
+        imageLightbox.open();
     }
 }

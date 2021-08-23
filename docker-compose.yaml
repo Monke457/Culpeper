@@ -1,0 +1,27 @@
+services:
+  #service 1: definition of mysql database
+  db:
+    container_name: 'mysql-culpeper'
+    image: 'mysql:5.7'
+    ports:
+      - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: mukit
+
+  #service 2: definition of spring-boot app
+  springbwapp:
+    container_name: 'culpeper'
+    image: 'bwapp/culpeper'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+    restart: always
+
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-culpeper:3306/culpeper?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: mukit

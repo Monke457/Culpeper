@@ -1,6 +1,8 @@
 package com.bwapp.culpeper.model;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Plant extends GenericEntity {
@@ -10,7 +12,10 @@ public class Plant extends GenericEntity {
     private String description;
     private String place;
     private String time;
-    private String imgPath;
+
+    @ManyToOne
+    @JoinColumn(name = "resource_id")
+    private Resource resource;
     private String government;
     private String virtue;
     private String otherNames;
@@ -18,13 +23,13 @@ public class Plant extends GenericEntity {
     public Plant() {
     }
 
-    public Plant(String latinName, String commonName, String description, String place, String time, String imgPath, String government, String virtue, String otherNames) {
+    public Plant(String latinName, String commonName, String description, String place, String time, Resource resource, String government, String virtue, String otherNames) {
         this.latinName = latinName;
         this.commonName = commonName;
         this.description = description;
         this.place = place;
         this.time = time;
-        this.imgPath = imgPath;
+        this.resource = resource;
         this.government = government;
         this.virtue = virtue;
         this.otherNames = otherNames;
@@ -70,12 +75,12 @@ public class Plant extends GenericEntity {
         this.time = time;
     }
 
-    public String getImgPath() {
-        return imgPath;
+    public Resource getResource() {
+        return resource;
     }
 
-    public void setImgPath(String imgPath) {
-        this.imgPath = imgPath;
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
     public String getGovernment() {

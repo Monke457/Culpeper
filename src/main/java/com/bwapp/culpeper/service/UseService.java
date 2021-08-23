@@ -1,5 +1,6 @@
 package com.bwapp.culpeper.service;
 
+import com.bwapp.culpeper.model.Plant;
 import com.bwapp.culpeper.model.Use_;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,5 +56,13 @@ public class UseService {
             }
         }
         return uses;
+    }
+
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
+    public Use_ update(Use_ use) {
+        return repository.save(use);
     }
 }
