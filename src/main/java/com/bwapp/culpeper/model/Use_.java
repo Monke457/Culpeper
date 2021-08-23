@@ -2,6 +2,7 @@ package com.bwapp.culpeper.model;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "use_")
@@ -14,17 +15,17 @@ public class Use_ extends GenericEntity {
     private String part;
     private String direction;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(
             name = "use_ailment",
             joinColumns = @JoinColumn(name = "use_id"),
             inverseJoinColumns = @JoinColumn(name = "ailment_id"))
-    private List<Ailment> ailments;
+    private Set<Ailment> ailments;
 
     public Use_() {
     }
 
-    public Use_(Plant plant, String part, String direction, List<Ailment> ailments) {
+    public Use_(Plant plant, String part, String direction, Set<Ailment> ailments) {
         this.plant = plant;
         this.part = part;
         this.direction = direction;
@@ -55,11 +56,11 @@ public class Use_ extends GenericEntity {
         this.direction = direction;
     }
 
-    public List<Ailment> getAilments() {
+    public Set<Ailment> getAilments() {
         return ailments;
     }
 
-    public void setAilments(List<Ailment> ailments) {
+    public void setAilments(Set<Ailment> ailments) {
         this.ailments = ailments;
     }
 }
