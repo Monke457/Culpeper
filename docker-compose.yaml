@@ -1,5 +1,4 @@
 services:
-  #service 1: definition of mysql database
   db:
     container_name: 'mysql-culpeper'
     image: 'mysql:5.7'
@@ -8,7 +7,6 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: mukit
 
-  #service 2: definition of spring-boot app
   springbwapp:
     container_name: 'culpeper'
     image: 'bwapp/culpeper'
@@ -18,7 +16,6 @@ services:
     ports:
       - 8080:8080
     restart: always
-
     depends_on:
       - db
     environment:

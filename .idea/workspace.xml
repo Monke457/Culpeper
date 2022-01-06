@@ -11,6 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="38fe06a5-b208-46fd-92f4-162e58f4363a" name="Changes" comment="compose from git">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +74,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="com.google.cloudcode.ide_session_index" value="20220106_0001" />
+    <property name="com.google.cloudcode.ide_session_index" value="20220106_0003" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/docker-compose.yaml" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -138,32 +139,6 @@
         </option>
       </MavenSettings>
       <method v="2" />
-    </configuration>
-    <configuration name="Tomcat Server" type="com.poratu.idea.plugins.tomcat" factoryName="SMART_TOMCAT_FACTORY">
-      <option name="adminPort" value="8005" />
-      <option name="contextPath" value="/Culpeper" />
-      <option name="docBase" value="C:\Users\bethw\IdeaProjects\Culpeper\src\main\webapp" />
-      <option name="envOptions">
-        <map />
-      </option>
-      <option name="passParentEnvironmentVariables" value="true" />
-      <option name="port" value="8080" />
-      <option name="tomcatInfo">
-        <TomcatInfo>
-          <option name="name" value="Apache Tomcat/8.5.69" />
-          <option name="number" value="0" />
-          <option name="path" value="C:\dev\apache-tomcat-8.5.69" />
-          <option name="version" value="8.5.69.0" />
-        </TomcatInfo>
-      </option>
-      <option name="vmOptions" value="" />
-      <method v="2">
-        <option name="Maven.BeforeRunTask" enabled="true" file="$PROJECT_DIR$/pom.xml" goal="vaadin:prepare-frontend" />
-        <option name="BuildArtifacts" enabled="true">
-          <artifact name="culpeper-snapshot.war" />
-        </option>
-        <option name="Make" enabled="true" />
-      </method>
     </configuration>
     <configuration name="package, compose" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
       <deployment type="docker-compose.yml">
@@ -281,7 +256,21 @@
       <option name="project" value="LOCAL" />
       <updated>1641458199369</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="compose from git">
+      <created>1641459768568</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1641459768568</updated>
+    </task>
+    <task id="LOCAL-00014" summary="compose from git">
+      <created>1641459983164</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1641459983164</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="UnknownFeatures">
