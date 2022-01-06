@@ -13,7 +13,7 @@ services:
     container_name: 'culpeper'
     image: 'bwapp/culpeper'
     build:
-      context: https://github.com/Monke457/Culpeper
+      context: https://github.com/Monke457/Culpeper.git
       dockerfile: Dockerfile
     ports:
       - 8080:8080
