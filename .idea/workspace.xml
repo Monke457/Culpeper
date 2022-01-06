@@ -9,18 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38fe06a5-b208-46fd-92f4-162e58f4363a" name="Changes" comment="test merge with master">
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+    <list default="true" id="38fe06a5-b208-46fd-92f4-162e58f4363a" name="Changes" comment="compose from git">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/helper/BlobConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/helper/BlobConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/security/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/security/SecurityConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/service/MyUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/security/MyUserDetailsService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/view/AdminView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/view/AdminView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/view/ModalImageGallery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/view/ModalImageGallery.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.generated.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.generated.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -255,7 +247,21 @@
       <option name="project" value="LOCAL" />
       <updated>1629702261116</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="compose from git">
+      <created>1641457067284</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1641457067284</updated>
+    </task>
+    <task id="LOCAL-00009" summary="compose from git">
+      <created>1641457231777</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1641457231777</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -486,6 +492,7 @@
     <MESSAGE value="implemented crud for admin area" />
     <MESSAGE value="gitignore update&#10;resource management change to blob" />
     <MESSAGE value="test merge with master" />
-    <option name="LAST_COMMIT_MESSAGE" value="test merge with master" />
+    <MESSAGE value="compose from git" />
+    <option name="LAST_COMMIT_MESSAGE" value="compose from git" />
   </component>
 </project>
