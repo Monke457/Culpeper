@@ -8,12 +8,15 @@ import com.bwapp.culpeper.service.AilmentService;
 import com.bwapp.culpeper.service.PlantService;
 import com.bwapp.culpeper.service.ResourceService;
 import com.bwapp.culpeper.service.UseService;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.HasStyle;
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
+import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
@@ -147,8 +150,6 @@ public class AdminView extends Div {
         ailmentForm = new FormLayout();
         useForm = new FormLayout();
 
-        addAilment.addClickListener(e -> createAilmentBox(null));
-
         configureGrids();
         configureCheckboxes();
         configureForms();
@@ -188,7 +189,7 @@ public class AdminView extends Div {
         plantGrid.addThemeVariants(GridVariant.LUMO_WRAP_CELL_CONTENT);
         plantGrid.addComponentColumn(plant -> {
                     if(plant.getResource() != null) {
-                        Image plantImage = bc.blobToImage(plant.getResource().getFile());
+                        Image plantImage = bc.blobToImage(plant.getResource().getFile(), plant.getResource().getFileName());
                         plantImage.setMaxWidth("100px");
                         return plantImage;
                     }else {
@@ -347,35 +348,24 @@ public class AdminView extends Div {
         Button imageSelect = new Button("Select new image");
         imageSelect.addClickListener(e -> new ModalImageGallery(resourceService, selectedImage).open());
         plantForm.add(imageSelect);
-        plantForm.setWidthFull();
 
         ailmentForm.addFormItem(ailmentName, "Name");
         ailmentForm.addFormItem(bodyPart, "Body Part");
         ailmentForm.addFormItem(virtueA, "Virtue");
-        ailmentForm.setWidthFull();
 
         useForm.addFormItem(plantSelect, "Plant");
         useForm.addFormItem(part, "Part");
         useForm.addFormItem(direction, "Directions");
         useForm.addFormItem(ailmentFirstBox, "Ailments");
+        addAilment.addClickListener(e -> createAilmentBox(null));
 
-        useForm.setWidthFull();
+        Component[] components = new Component[]{latinName, commonName, description, place, time,
+                government, virtue, virtueA, otherNames, ailmentName, bodyPart, ailmentFirstBox,
+                plantSelect, part, direction, addAilment, plantForm, ailmentForm, useForm};
 
-        latinName.setWidthFull();
-        commonName.setWidthFull();
-        description.setWidthFull();
-        place.setWidthFull();
-        time.setWidthFull();
-        government.setWidthFull();
-        virtue.setWidthFull();
-        virtueA.setWidthFull();
-        otherNames.setWidthFull();
-        ailmentName.setWidthFull();
-        bodyPart.setWidthFull();
-        ailmentFirstBox.setWidthFull();
-        plantSelect.setWidthFull();
-        part.setWidthFull();
-        direction.setWidthFull();
+        for(Component c : components) {
+            ((HasStyle) c).addClassName("full-width");
+        }
 
         ailmentFirstBox.setItems(ailmentService.getAllNames().stream().sorted());
         ailmentFirstBox.addCustomValueSetListener(e -> ailmentFirstBox.setValue(e.getDetail()));
@@ -402,8 +392,8 @@ public class AdminView extends Div {
                 if (this.plant == null) {
                     this.plant = new Plant();
                 }
-                plant.setResource(resourceService.findByFileName(selectedImage.getAlt().get()));
                 plantBinder.writeBean(this.plant);
+                plant.setResource(resourceService.findByFileName(selectedImage.getAlt().get()));
                 plantService.update(this.plant);
                 clearFormsAndGrids();
                 Notification.show("Plant details stored.");
@@ -485,12 +475,12 @@ public class AdminView extends Div {
 
     private void populatePlantForm(Plant value) {
         this.plant = value;
-        if(value != null && value.getResource() != null) {
-            Image i = bc.blobToImage(value.getResource().getFile());
-            selectedImage.setSrc(i.getSrc());
-            selectedImage.setAlt(value.getResource().getFileName());
-        }
         plantBinder.readBean(value);
+        if(value != null && value.getResource() != null) {
+            Image img = bc.blobToImage(value.getResource().getFile(), value.getResource().getFileName());
+            selectedImage.setSrc(img.getSrc());
+            selectedImage.setAlt(img.getAlt().get());
+        }
     }
 
     private void populateAilmentForm(Ailment value) {

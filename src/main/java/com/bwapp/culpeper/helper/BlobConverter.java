@@ -20,13 +20,14 @@ public class BlobConverter {
         return blob;
     }
 
-    public Image blobToImage(Blob imageData) {
+    public Image blobToImage(Blob imageData, String name) {
         Image image = null;
         try{
             int blobLength = (int) imageData.length();
             byte[] blobAsBytes = imageData.getBytes(1, blobLength);
-            StreamResource streamResource = new StreamResource("isr", (InputStreamFactory) () -> new ByteArrayInputStream(blobAsBytes));
-            image =new Image(streamResource, "photo");
+            StreamResource streamResource = new StreamResource(name, (InputStreamFactory) () -> new ByteArrayInputStream(blobAsBytes));
+            streamResource.setContentType(name.substring(name.indexOf(".")));
+            image = new Image(streamResource, name.substring(0, name.indexOf(".")));
         }catch (Exception e) {
             System.out.println("blob conversion error - blob to image");
         }

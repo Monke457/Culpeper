@@ -9,8 +9,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="38fe06a5-b208-46fd-92f4-162e58f4363a" name="Changes" comment="">
+    <list default="true" id="38fe06a5-b208-46fd-92f4-162e58f4363a" name="Changes" comment="test merge with master">
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/helper/BlobConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/helper/BlobConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/security/SecurityConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/security/SecurityConfiguration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/service/MyUserDetailsService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/security/MyUserDetailsService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/view/AdminView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/view/AdminView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/view/ModalImageGallery.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bwapp/culpeper/view/ModalImageGallery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webpack.generated.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.generated.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +39,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="backup" />
+        <entry key="$PROJECT_DIR$" value="backup2" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -72,6 +82,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="com.google.cloudcode.ide_session_index" value="20220106_0001" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/docker-compose.yaml" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -97,7 +108,7 @@
       <recent name="com.bwapp.culpeper.service" />
     </key>
   </component>
-  <component name="RunManager" selected="Maven.Culpeper [clean,spring-boot:run]">
+  <component name="RunManager" selected="Docker.package, compose">
     <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.bwapp.culpeper.Application" />
       <module name="Culpeper" />
@@ -189,7 +200,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b3da956c-fb27-46f6-ad24-a4cd1d849f40" name="Default Changelist" comment="" />
+      <changelist id="38fe06a5-b208-46fd-92f4-162e58f4363a" name="Changes" comment="test merge with master" />
       <created>1627067919207</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -237,7 +248,14 @@
       <option name="project" value="LOCAL" />
       <updated>1629698521435</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="test merge with master">
+      <created>1629702261116</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1629702261116</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -467,6 +485,7 @@
     <MESSAGE value="added admin area and login mask" />
     <MESSAGE value="implemented crud for admin area" />
     <MESSAGE value="gitignore update&#10;resource management change to blob" />
-    <option name="LAST_COMMIT_MESSAGE" value="gitignore update&#10;resource management change to blob" />
+    <MESSAGE value="test merge with master" />
+    <option name="LAST_COMMIT_MESSAGE" value="test merge with master" />
   </component>
 </project>

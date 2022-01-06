@@ -1,5 +1,6 @@
-package com.bwapp.culpeper.service;
+package com.bwapp.culpeper.security;
 
+import com.bwapp.culpeper.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

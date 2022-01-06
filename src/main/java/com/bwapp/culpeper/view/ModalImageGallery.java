@@ -35,7 +35,6 @@ public class ModalImageGallery extends Dialog {
 
     private final ResourceService resourceService;
 
-    private final Div details;
     private final FlexLayout galleryLayout;
     private final Paragraph text;
     private final BlobConverter bc = new BlobConverter();
@@ -60,7 +59,6 @@ public class ModalImageGallery extends Dialog {
         rightLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
 
         text = new Paragraph("Selected image: none");
-        details = new Div();
 
         galleryLayout = new FlexLayout();
         galleryLayout.setFlexWrap(FlexLayout.FlexWrap.WRAP);
@@ -112,7 +110,7 @@ public class ModalImageGallery extends Dialog {
             if(selectedSrc == null) dialogImage.open();
         });
 
-        rightLayout.add(text, details, upload, new HorizontalLayout(selectImageButton, cancelButton, removeButton));
+        rightLayout.add(text, upload, new HorizontalLayout(selectImageButton, cancelButton, removeButton));
         mainLayout.addToPrimary(galleryLayout);
         mainLayout.addToSecondary(rightLayout);
         add(mainLayout);
@@ -125,8 +123,7 @@ public class ModalImageGallery extends Dialog {
         List<Image> images = new ArrayList<>();
 
         for (Resource r : resources) {
-            Image tmpImg = bc.blobToImage(r.getFile());
-            tmpImg.setAlt(r.getFileName());
+            Image tmpImg = bc.blobToImage(r.getFile(), r.getFileName());
             images.add(tmpImg);
             tmpImg.setMaxHeight("200px");
             tmpImg.setMaxWidth("200px");
@@ -134,17 +131,15 @@ public class ModalImageGallery extends Dialog {
             tmpImg.addClickListener(e -> {
                 for(Image i : images) {
                     i.getStyle().set("border", "none");
-                    details.setText("");
                 }
                 if(!tmpImg.getSrc().equals(selectedSrc)) {
                     tmpImg.getStyle().set("border", "3px solid green");
-                    details.setText("Name: " + tmpImg.getAlt().get());
                     selectedSrc = tmpImg.getSrc();
                     selectedAlt = tmpImg.getAlt().get();
                 }else {
                     selectedSrc = null;
                 }
-                text.setText("Selected image: " + (selectedSrc != null ? "" : "none"));
+                text.setText("Selected image: " + (selectedSrc != null ? selectedAlt : "none"));
             });
             galleryLayout.add(tmpImg);
         }
