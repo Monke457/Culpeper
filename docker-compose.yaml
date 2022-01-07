@@ -14,8 +14,8 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 80:8080
-      - 443:8081
+      - 80:80
+      - 443:443
     restart: always
     depends_on:
       - db
