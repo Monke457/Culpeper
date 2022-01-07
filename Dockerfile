@@ -28,5 +28,6 @@ FROM openjdk:16-jdk-slim
 COPY --from=build /usr/src/app/target/*.jar /usr/app/app.jar
 RUN useradd -m culpeper
 USER culpeper
-EXPOSE 8080
+EXPOSE 80
+EXPOSE 443
 CMD java -jar /usr/app/app.jar
