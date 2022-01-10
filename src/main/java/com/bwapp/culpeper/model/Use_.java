@@ -1,6 +1,7 @@
 package com.bwapp.culpeper.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.Set;
 
@@ -9,7 +10,7 @@ import java.util.Set;
 public class Use_ extends GenericEntity {
 
     @ManyToOne
-    @JoinColumn(name = "plant_id")
+    @NotNull
     private Plant plant;
 
     private String part;

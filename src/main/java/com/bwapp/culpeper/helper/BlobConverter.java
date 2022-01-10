@@ -3,11 +3,16 @@ package com.bwapp.culpeper.helper;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.server.InputStreamFactory;
 import com.vaadin.flow.server.StreamResource;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.ByteArrayInputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 
+@Component
 public class BlobConverter {
 
     public Blob bytesToBlob(byte[] imageAsBytes) {

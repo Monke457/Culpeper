@@ -52,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .requestCache().requestCache(new HttpSessionRequestCache())
                 .and().authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/", "/old", "/plants", "/ailments").permitAll()
                 .requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
                 .anyRequest().authenticated()
                 .and()

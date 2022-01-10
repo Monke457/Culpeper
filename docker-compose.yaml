@@ -15,6 +15,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - 8080:8080
+      - 8443:443
     restart: always
     depends_on:
       - db

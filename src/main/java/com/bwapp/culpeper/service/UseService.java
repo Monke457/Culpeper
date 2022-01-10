@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UseService {
@@ -19,7 +20,7 @@ public class UseService {
     }
 
     public List<Use_> findAll() {
-        return repository.findAll();
+        return repository.findAll().stream().distinct().collect(Collectors.toList());
     }
 
     public Use_ findById(Long id) {

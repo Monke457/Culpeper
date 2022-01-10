@@ -11,14 +11,12 @@ import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.*;
-import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.splitlayout.SplitLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -41,7 +39,7 @@ public class HomeView extends Div {
 
     private boolean zoomed;
 
-    public HomeView(@Autowired UseService useService, AilmentService ailmentService) {
+    public HomeView(UseService useService, AilmentService ailmentService) {
         this.useService = useService;
         this.ailmentService = ailmentService;
 

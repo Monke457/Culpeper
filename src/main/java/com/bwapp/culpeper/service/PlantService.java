@@ -26,6 +26,10 @@ public class PlantService {
         return repository.findById(id).isPresent() ? repository.findById(id).get() : null;
     }
 
+    public List<Plant> findByTerm(String term) {
+        return repository.findByTerm(term);
+    }
+
     public Plant findByName(String name) {
         return repository.findByCommonName(name);
     }
