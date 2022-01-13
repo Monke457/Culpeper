@@ -9,7 +9,7 @@ services:
 
   springbwapp:
     container_name: 'culpeper'
-    image: 'bwapp/culpeper'
+    image: 'culpeper:latest'
     build:
       context: .
       dockerfile: Dockerfile
