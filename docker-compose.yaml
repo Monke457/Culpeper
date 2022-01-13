@@ -1,12 +1,12 @@
+version: '3.9'
 services:
   db:
     container_name: 'mysql-culpeper'
     image: 'mysql:5.7'
     ports:
-      - 3306:3306
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: mukit
-
   springbwapp:
     container_name: 'culpeper'
     image: 'culpeper:latest'
@@ -14,8 +14,8 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 8080:80
-      - 8080:443
+      - "8080:80"
+      - "8080:443"
     restart: always
     depends_on:
       - db
