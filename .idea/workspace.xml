@@ -11,6 +11,8 @@
   <component name="ChangeListManager">
     <list default="true" id="38fe06a5-b208-46fd-92f4-162e58f4363a" name="Changes" comment="compose from git">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +74,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="com.google.cloudcode.ide_session_index" value="20220110_0002" />
+    <property name="com.google.cloudcode.ide_session_index" value="20220113_0000" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/docker-compose.yaml" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
@@ -151,8 +153,8 @@
     </configuration>
     <list>
       <item itemvalue="Application.Application" />
-      <item itemvalue="Maven.Culpeper [clean,spring-boot:run]" />
       <item itemvalue="Docker.package, compose" />
+      <item itemvalue="Maven.Culpeper [clean,spring-boot:run]" />
     </list>
     <recent_temporary>
       <list>
@@ -394,7 +396,14 @@
       <option name="project" value="LOCAL" />
       <updated>1641821833026</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="compose from git">
+      <created>1641823132194</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1641823132194</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="UnknownFeatures">
